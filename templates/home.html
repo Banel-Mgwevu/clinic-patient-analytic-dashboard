@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Onboarding Page</title>
+    <style>
+        /* Basic styling for the onboarding page */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+        }
+        /* Modal Styling */
+        .modal {
+            display: none; /* Hide the modal by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .emoji {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-decoration: none;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h1>Welcome to Our Platform! 🎉</h1>
+            <div class="emoji">👋😊🌟</div>
+            <p>We are thrilled to have you here! Our platform offers amazing features and services.</p>
+            <p>Explore and manage patient health records, charts, and more.</p>
+            <a href="/dashboard" class="button">Get Started</a>
+        </div>
+    </div>
+
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the modal element
+            const modal = document.getElementById('myModal');
+    
+            // Check if it's the first visit by checking local storage
+            const hasVisited = localStorage.getItem('hasVisited');
+    
+            // Show the modal only if it's the first visit
+            if (hasVisited !== 'true') {
+                modal.style.display = 'flex'; // Show the modal
+                localStorage.setItem('hasVisited', 'true'); // Set local storage to indicate the visit
+            }
+        });
+    </script> -->
+        </body>
+</html>

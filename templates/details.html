@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Details</title>
+    <style>
+        /* Basic styling for the dashboard */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f5f9;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #d2e4f5;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+            border-bottom: 2px solid #2980b9;
+        }
+        tr:nth-child(even) {
+            background-color: #f7f9fc;
+        }
+        tr:hover {
+            background-color: #e3eaf3;
+        }
+        .asc:after,
+        .desc:after {
+            display: inline-block;
+            margin-left: 5px;
+            opacity: 0.6;
+            font-size: 10px;
+        }
+        .asc:after {
+            content: '▲';
+        }
+        .desc:after {
+            content: '▼';
+        }
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #1a5276;
+        }
+    </style>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Details</h1>
+        <ul>
+            <li><strong>Patient ID: </strong> {{ patient.PatientId }}</li>
+            <li><strong>Date Of Birth: </strong> {{ patient.DoB }}</li>
+            <li><strong>Gender: </strong> {{ patient.Sex }}</li>
+            <li><strong>Diagnosis: </strong> {{ patient.Sex }}</li>
+            <li><strong>Clinic Went To: </strong> {{ patient.HealthFacility }}</li>
+            <li><strong>Date of HIV Diagnosis: </strong> {{ date_of_hiv_diagnosis }}</li>
+            <li><strong>Year of HIV Diagnosis: </strong> {{ year_of_hiv_diagnosis }}</li>
+
+            <!-- Add other patient details here -->
+        </ul>
+
+
+        <h2>Diastolic Blood Pressure Trend</h2>
+        <canvas id="diastolicChart" width="300" height="100"></canvas>
+        
+        <h2>Systolic Blood Pressure Trend</h2>
+        <canvas id="systolicChart" width="300" height="100"></canvas>
+        
+        <h2>Weight Trend</h2>
+        <canvas id="weightChart" width="300" height="100"></canvas>
+        
+        <h2>Blood Glucose Trend</h2>
+        <canvas id="bloodGlucoseChart" width="300" height="100"></canvas>
+
+        <h2>CD4 Count</h2>
+        <canvas id="CD4Chart" width="300" height="150"></canvas>
+
+
+            </div>
+
+    <script>
+        var diastolicData = {{ diastolic_bp | tojson }};
+        var systolicData = {{ SystolicBP_bp | tojson }};
+        var weightData = {{ Weight_bp | tojson }};
+        var bloodGlucoseData = {{ BloodGlucose_bp | tojson }};
+        var dateData = {{ Date_v | tojson }};
+        var cdData= {{ cd | tojson }};
+ ;
+
+        var ctxDiastolic = document.getElementById('diastolicChart').getContext('2d');
+        var ctxSystolic = document.getElementById('systolicChart').getContext('2d');
+        var ctxWeight = document.getElementById('weightChart').getContext('2d');
+        var ctxBloodGlucose = document.getElementById('bloodGlucoseChart').getContext('2d');
+        var cd4countx = document.getElementById('CD4Chart').getContext('2d');
+
+
+        var diastolicChart = new Chart(ctxDiastolic, {
+            type: 'line',
+            data: {
+                labels: dateData,//Array.from(Array(diastolicData.length).keys()),
+                datasets: [{
+                    label: 'Diastolic Blood Pressure',
+                    data: diastolicData,
+                    borderColor: 'green',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                // Chart options
+            }
+        });
+
+
+        var systolicChart = new Chart(ctxSystolic, {
+            type: 'line',
+            data: {
+                labels: dateData,//Array.from(Array(systolicData.length).keys()),
+                datasets: [{
+                    label: 'Systolic Blood Pressure',
+                    data: systolicData,
+                    borderColor: 'blue',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                // Chart options
+            }
+        });
+
+        var weightChart = new Chart(ctxWeight, {
+            type: 'line',
+            data: {
+                labels: dateData,//Array.from(Array(weightData.length).keys()),
+                datasets: [{
+                    label: 'Weight',
+                    data: weightData,
+                    borderColor: 'green',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                // Chart options
+            }
+        });
+
+        var bloodGlucoseChart = new Chart(ctxBloodGlucose, {
+            type: 'line',
+            data: {
+                labels: dateData,//Array.from(Array(bloodGlucoseData.length).keys()),
+                datasets: [{
+                    label: 'Blood Glucose',
+                    data: bloodGlucoseData,
+                    borderColor: 'red',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                // Chart options
+            }
+        });
+
+        var bloodGlucoseChart = new Chart(cd4countx, {
+            type: 'line',
+            data: {
+                labels: dateData,//Array.from(Array(bloodGlucoseData.length).keys()),
+                datasets: [{
+                    label: 'CD4',
+                    data: cdData,
+                    borderColor: 'purple',
+                    borderWidth: 1,
+                    fill: false
+                }]
+            },
+            options: {
+                // Chart options
+            }
+        });
+
+
+
+    </script>
+</body>
+</html>
